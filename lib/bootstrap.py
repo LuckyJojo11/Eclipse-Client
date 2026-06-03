@@ -20,7 +20,7 @@ MAIN = os.path.join(ROOT, "lib", "main.py")
 LOG = os.path.join(RESOURCE_DIR, "bootstrap.log")
 VERSION_FILE = os.path.join(RESOURCE_DIR, ".eclipse_client_version")
 SETUP_FILE = os.path.join(RESOURCE_DIR, ".setup_done")
-APP_VERSION = "v1.0.0"
+APP_VERSION = "v1.0.1"
 GITHUB_API = "https://api.github.com/repos/LuckyJojo11/Eclipse-Client/releases/latest"
 USER_AGENT = "EclipseClientBootstrap/1.0"
 
