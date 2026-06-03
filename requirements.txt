@@ -1,0 +1,6 @@
+customtkinter
+CTkToolTip
+Flask
+minecraft-launcher-lib
+Pillow
+requests

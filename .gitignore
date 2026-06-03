@@ -1,0 +1,53 @@
+# Python cache
+__pycache__/
+*.py[cod]
+*.pyo
+
+# Virtual environments
+.venv/
+venv/
+env/
+build_venv/
+
+# Build output
+build/
+dist/
+build_deps/
+*.spec
+*.exe
+
+# Runtime logs
+*.log
+logs/
+lib/logs/
+eclipseclientlog.txt
+bootstrap.log
+
+# Eclipse Client local data
+lib/files/*.json
+!lib/files/.gitkeep
+instances/
+config/
+.mixin.out/
+
+# Minecraft generated data
+crash-reports/
+screenshots/
+resourcepacks/
+shaderpacks/
+saves/
+mods/
+options.txt
+servers.dat
+servers.dat_old
+usercache.json
+realms_persistence.json
+command_history.txt
+hotbar.nbt
+
+# OS/editor noise
+.DS_Store
+Thumbs.db
+desktop.ini
+.idea/
+.vscode/
