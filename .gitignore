@@ -22,8 +22,13 @@ logs/
 lib/logs/
 eclipseclientlog.txt
 bootstrap.log
+lib/applicationresources/eclipseclientlog.txt
+lib/applicationresources/bootstrap.log
 
 # Eclipse Client local data
+.eclipse_client_version
+lib/applicationresources/.eclipse_client_version
+lib/applicationresources/.setup_done
 lib/files/*.json
 !lib/files/.gitkeep
 instances/

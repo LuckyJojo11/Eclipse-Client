@@ -1,6 +1,8 @@
 Set shell = CreateObject("WScript.Shell")
 Set files = CreateObject("Scripting.FileSystemObject")
-folder = files.GetParentFolderName(WScript.ScriptFullName)
+resourceFolder = files.GetParentFolderName(WScript.ScriptFullName)
+libFolder = files.GetParentFolderName(resourceFolder)
+folder = files.GetParentFolderName(libFolder)
 
 exe = folder & "\Eclipse Client.exe"
 If files.FileExists(exe) Then

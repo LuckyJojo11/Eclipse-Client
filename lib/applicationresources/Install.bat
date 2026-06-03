@@ -1,6 +1,6 @@
 @echo off
 setlocal
-cd /d "%~dp0"
+cd /d "%~dp0\..\.."
 
 echo ------------------------------------
 echo        ECLIPSE CLIENT SETUP
@@ -52,7 +52,7 @@ if errorlevel 1 (
 
 echo.
 echo Installiere Bibliotheken...
-%PYTHON_CMD% -m pip install -r requirements.txt
+%PYTHON_CMD% -m pip install -r lib\applicationresources\requirements.txt
 if errorlevel 1 (
     echo.
     echo Installation der Bibliotheken fehlgeschlagen.
@@ -62,6 +62,6 @@ if errorlevel 1 (
 
 echo.
 echo Setup abgeschlossen.
-echo Du kannst den Launcher jetzt ueber "Eclipse Client.vbs" starten.
+echo Du kannst den Launcher jetzt ueber "lib\applicationresources\Eclipse Client.vbs" starten.
 echo.
 pause

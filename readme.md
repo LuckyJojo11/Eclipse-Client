@@ -24,13 +24,17 @@ This project is not an official Minecraft product and is not affiliated with Moj
 - Add and remove mods from the launcher
 - Automatic download of required mod dependencies
 - Import Modrinth `.mrpack` modpacks while creating an instance
-- Bootstrap executable that checks Python and required libraries
+- Bootstrap executable that checks Python, required libraries and GitHub releases
 
 ## Download
 
 The easiest way to use Eclipse Client is to download `Eclipse Client.exe` from the GitHub Releases page.
 
-After downloading it, place it in an empty folder and start it with a double click. The launcher will check whether Python and the required libraries are installed. If something is missing, it will ask whether it should install the missing parts.
+After downloading it, place it in an empty folder and start it with a double click. The launcher will open a small installer-style setup window and check whether the source files, Python and the required libraries are installed. If something is missing, it will ask whether it should download or install the missing parts.
+
+On the first start, Eclipse Client can also create a Desktop shortcut and a Start Menu entry.
+
+When a newer GitHub Release exists, the bootstrap executable can download the latest source code before starting the client. Local instances, worlds, mods, logs and login data are kept.
 
 ## Requirements
 
@@ -44,7 +48,7 @@ After downloading it, place it in an empty folder and start it with a double cli
 Install the Python dependencies:
 
 ```bat
-py -3 -m pip install -r requirements.txt
+py -3 -m pip install -r lib\applicationresources\requirements.txt
 ```
 
 Start the client:
@@ -56,13 +60,13 @@ py -3 lib\main.py
 You can also run the setup script:
 
 ```bat
-Install.bat
+lib\applicationresources\Install.bat
 ```
 
 Then start the client without a console window:
 
 ```bat
-Eclipse Client.vbs
+lib\applicationresources\Eclipse Client.vbs
 ```
 
 ## Build The EXE
@@ -70,7 +74,7 @@ Eclipse Client.vbs
 Run:
 
 ```bat
-Build EXE.bat
+lib\applicationresources\Build EXE.bat
 ```
 
 The script creates a local build environment, installs PyInstaller and builds `Eclipse Client.exe`.
@@ -85,6 +89,18 @@ Generated build files are ignored by Git:
 - `Eclipse Client.spec`
 
 Upload the finished executable as a GitHub Release instead of committing it to the repository.
+
+Before creating a new release, update `APP_VERSION` in `lib/bootstrap.py` to the new release tag, for example `v1.0.1`.
+
+## Project Structure
+
+Files that are needed by the bootstrapper but are not part of the main application UI live in:
+
+```text
+lib/applicationresources/
+```
+
+This includes setup scripts, build scripts, requirements and local bootstrap logs.
 
 ## Instances
 
@@ -123,6 +139,11 @@ The launcher creates local runtime data while it is used. These files are ignore
 - `config/`
 - `logs/`
 - `lib/files/*.json`
+- `.eclipse_client_version`
+- `lib/applicationresources/.eclipse_client_version`
+- `lib/applicationresources/.setup_done`
+- `lib/applicationresources/eclipseclientlog.txt`
+- `lib/applicationresources/bootstrap.log`
 - `eclipseclientlog.txt`
 - `bootstrap.log`
 
