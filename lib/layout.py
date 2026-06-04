@@ -6,6 +6,8 @@ import console
 import launcher
 from data_reader import *
 
+ctk.set_appearance_mode("dark")
+
 class App(ctk.CTk):
     def __init__(self):
         super().__init__()
