@@ -1,4 +1,5 @@
 import { Download, Github, Home, ListChecks, CircleHelp } from "lucide-react";
+import { useEffect, useState } from "react";
 import "./styles.css";
 
 const navButtons = [
@@ -9,7 +10,40 @@ const navButtons = [
   { label: "About", href: "#about", Icon: CircleHelp }
 ];
 
+type ReleaseInfo = {
+  version: string;
+  downloadUrl: string;
+  fileName: string;
+};
+
 function App() {
+  const [release, setRelease] = useState<ReleaseInfo | null>(null);
+  const [releaseError, setReleaseError] = useState("");
+
+  useEffect(() => {
+    async function loadLatestRelease() {
+      try {
+        const response = await fetch("https://api.github.com/repos/LuckyJojo11/Eclipse-Client/releases/latest");
+        if (!response.ok) {
+          throw new Error("Could not load latest release.");
+        }
+
+        const data = await response.json();
+        const asset = data.assets?.find((item: { name: string }) => item.name.endsWith(".exe"));
+
+        setRelease({
+          version: data.tag_name ?? "Latest",
+          downloadUrl: asset?.browser_download_url ?? data.html_url,
+          fileName: asset?.name ?? "Open release page"
+        });
+      } catch {
+        setReleaseError("Latest release could not be loaded.");
+      }
+    }
+
+    loadLatestRelease();
+  }, []);
+
   return (
     <>
       <header className="topbar">
@@ -73,11 +107,18 @@ function App() {
 
           <div className="download-card">
             <div>
-              <h3>Latest Release</h3>
-              <p>Download Eclipse Client from the official GitHub release page.</p>
+              <h3>{release ? release.version : "Latest Release"}</h3>
+              <p>
+                {release
+                  ? `Download ${release.fileName}`
+                  : releaseError || "Checking GitHub for the newest version..."}
+              </p>
             </div>
-            <a className="primary-button" href="https://github.com/LuckyJojo11/Eclipse-Client/releases">
-              Open Downloads
+            <a
+              className="primary-button"
+              href={release?.downloadUrl ?? "https://github.com/LuckyJojo11/Eclipse-Client/releases"}
+            >
+              {release ? "Download Latest" : "Open Downloads"}
             </a>
           </div>
         </section>
