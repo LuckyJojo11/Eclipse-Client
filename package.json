@@ -4,9 +4,9 @@
   "version": "0.1.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
-    "build": "tsc && vite build --configLoader runner",
-    "preview": "vite preview"
+    "dev": "vite --host 127.0.0.1 --port 1420 --strictPort",
+    "build": "tsc && vite build --base=/Eclipse-Client/",
+    "preview": "vite preview --host 127.0.0.1 --port 1420 --strictPort"
   },
   "dependencies": {
     "react": "^19.0.0",

@@ -34,10 +34,16 @@ The finished website will be generated in the `dist/` folder.
 
 ## GitHub Pages
 
-The Vite base path is set to:
+In the repository settings, set GitHub Pages to:
 
 ```text
-/Eclipse-Client/
+Source: GitHub Actions
+```
+
+The Vite base path is set in the build script:
+
+```text
+npm run build -> vite build --base=/Eclipse-Client/
 ```
 
 That matches this GitHub Pages URL:
