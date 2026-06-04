@@ -19,7 +19,7 @@ MAIN = os.path.join(ROOT, "lib", "main.py")
 LOG = os.path.join(RESOURCE_DIR, "bootstrap.log")
 VERSION_FILE = os.path.join(RESOURCE_DIR, ".eclipse_client_version")
 SETUP_FILE = os.path.join(RESOURCE_DIR, ".setup_done")
-APP_VERSION = "v1.0.2"
+APP_VERSION = "v1.0.3"
 GITHUB_API = "https://api.github.com/repos/LuckyJojo11/Eclipse-Client/releases/latest"
 USER_AGENT = "EclipseClientBootstrap/1.0"
 
@@ -72,16 +72,42 @@ def write_log(text):
     except Exception:
         pass
 
+def powershell_quote(text):
+    return "'" + text.replace("'", "''") + "'"
+
+def download_with_powershell(url, destination):
+    command = (
+        "$ProgressPreference = 'SilentlyContinue'; "
+        f"$headers = @{{'User-Agent' = {powershell_quote(USER_AGENT)}}}; "
+        f"Invoke-WebRequest -UseBasicParsing -Headers $headers -Uri {powershell_quote(url)} -OutFile {powershell_quote(destination)}"
+    )
+    result = run_hidden(["powershell", "-NoProfile", "-ExecutionPolicy", "Bypass", "-Command", command])
+    if result.returncode != 0:
+        output = (result.stderr or result.stdout or "").strip()
+        raise RuntimeError(output if output else "PowerShell download failed.")
+
 def request_json(url):
-    request = Request(url, headers={"User-Agent": USER_AGENT})
-    with urlopen(request, timeout=15) as response:
-        return json.loads(response.read().decode("utf-8"))
+    try:
+        request = Request(url, headers={"User-Agent": USER_AGENT})
+        with urlopen(request, timeout=15) as response:
+            return json.loads(response.read().decode("utf-8"))
+    except Exception as e:
+        write_log(f"PYTHON_JSON_DOWNLOAD_FAILED={e}")
+        with tempfile.TemporaryDirectory() as temp:
+            destination = os.path.join(temp, "response.json")
+            download_with_powershell(url, destination)
+            with open(destination, "r", encoding="utf-8") as file:
+                return json.load(file)
 
 def download_file(url, destination):
-    request = Request(url, headers={"User-Agent": USER_AGENT})
-    with urlopen(request, timeout=60) as response:
-        with open(destination, "wb") as file:
-            shutil.copyfileobj(response, file)
+    try:
+        request = Request(url, headers={"User-Agent": USER_AGENT})
+        with urlopen(request, timeout=60) as response:
+            with open(destination, "wb") as file:
+                shutil.copyfileobj(response, file)
+    except Exception as e:
+        write_log(f"PYTHON_FILE_DOWNLOAD_FAILED={e}")
+        download_with_powershell(url, destination)
 
 def source_is_missing():
     return not os.path.exists(MAIN) or not os.path.exists(REQUIREMENTS)
