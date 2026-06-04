@@ -36,12 +36,12 @@ On the first start, Eclipse Client can also create a Desktop shortcut and a Star
 
 When a newer GitHub Release exists, the bootstrap executable can download the latest source code before starting the client. Local instances, worlds, mods, logs and login data are kept.
 
-## Requirements
+> [!IMPORTANT]
+> You need Windows 10 or higher for the Program to work.\
+> You need Python 3.12 if running from source.\
+> A Microsoft account that owns Minecraft is required.\
 
-- Windows
-- Python 3.12 if running from source
-- A Microsoft account that owns Minecraft
-- Internet connection for login, Minecraft downloads, loader downloads and mod search
+You will also need a Internet connection to use most features.
 
 ## Run From Source
 
