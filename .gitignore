@@ -1,2 +1,18 @@
-﻿archive/
+archive/
 lib/applicationresources/eclipseclientlog.txt
+data/
+python/
+
+# Frontend dependencies and build output
+node_modules/
+dist/
+dist-ssr/
+
+# Tauri/Rust build output
+src-tauri/target/
+
+# Local editor and OS files
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
